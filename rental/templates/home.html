@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | Rental Motor{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <!-- bagian hero -->
+    <section id="hero" class="position-relative overflow-hidden">
+        <div class="pattern-overlay pattern-right position-absolute">
+            <img src="{% static 'images/hero-pattern-right.png' %}" alt="pattern">
+        </div>
+        <div class="pattern-overlay pattern-left position-absolute">
+            <img src="{% static 'images/hero-pattern-left.png' %}" alt="pattern">
+        </div>
+        <div class="hero-content container text-center">
+            <div class="row">
+                <div class="detail mb-4">
+                    <h1 class="">Find your <span class="text-primary"> rental motor </span> </h1>
+                    <p class="hero-paragraph">We have many best rental motor collections.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian untuk menampilkan motor -->
+<section id="rental" class="position-relative bg-light">
+    <div class="container my-5 py-5">
+        <h2 class="text-center mb-5 section-title">Motors for <span class="text-primary">Rental</span></h2>
+
+        <div class="row g-4">
+            {% for motor in motors %}
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+                    <div class="card motor-card h-100 shadow-sm border-0 transition-hover">
+                        <div class="card-img-container overflow-hidden">
+                            <a href="{% url 'rental:motor_detail' motor.id %}">
+                                <img src="{{ motor.gambar.url }}" class="card-img-top motor-image" alt="{{ motor.nama }}">
+                            </a>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <div class="mb-3">
+                                <a href="{% url 'rental:motor_detail' motor.id %}" class="text-decoration-none">
+                                    <h5 class="card-title text-dark motor-name">{{ motor.nama }}</h5>
+                                </a>
+                                <p class="card-text text-muted small">{{ motor.deskripsi|truncatewords:10 }}</p>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-primary rounded-pill">
+                                        Rp{{ motor.harga_per_hari }} / day
+                                    </span>
+                                    <a href="{% url 'rental:motor_detail' motor.id %}" class="btn btn-outline-primary btn-sm">
+                                        Rent Now
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% block extra_css %}
+<style>
+    /* Motor Card Styling */
+    .motor-card {
+        transition: all 0.3s ease;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .motor-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    }
+
+    .card-img-container {
+        height: 250px;
+    }
+
+    .motor-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .motor-card:hover .motor-image {
+        transform: scale(1.1);
+    }
+
+    .motor-name {
+        font-weight: 600;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .motor-card:hover .motor-name {
+        color: #007bff;
+    }
+
+    .section-title {
+        position: relative;
+        font-weight: 700;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        width: 50px;
+        height: 3px;
+        background-color: #007bff;
+        transform: translateX(-50%);
+    }
+</style>
+
+
+{% endblock %}
+<!-- bagian contact -->
+<section id="contact" class="position-relative bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Contact Us</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <form method="POST" action="#">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" placeholder="Your message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
