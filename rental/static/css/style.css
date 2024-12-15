@@ -295,12 +295,15 @@ a.nav-link:hover::after {
 }
 
 /*---- hero section style start ----*/
-section#hero {
+
+
+section #hero {
   background: var(--background-color);
 }
 
 .hero-content {
   padding: 200px 0px;
+
 }
 
 .hero-paragraph {

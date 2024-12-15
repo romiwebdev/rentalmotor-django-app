@@ -24,8 +24,28 @@ SECRET_KEY = 'django-insecure-1_bst_^x0f@auw30(@4#q4=bwfj8*ag#89$00i#%#e8i3+_!ew
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# Add the CSRF_TRUSTED_ORIGINS setting to allow the origin
+# CSRF_TRUSTED_ORIGINS = [
+#     '',
+# ]
 
-ALLOWED_HOSTS = []
+# Update the TEMPLATES setting to include the 'context_processors' for CSRF token
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'], 
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',  # Add this line
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
